@@ -13,6 +13,7 @@ services:
       - ${PORT}:${PORT}
     environment:
       STAGE: ${STAGE}
+      PORT: ${PORT}
       MONGO_DB_NAME: ${MONGO_DB_NAME}
       MONGO_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
       MONGO_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
@@ -33,22 +34,6 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
     command: ['--auth']
 
-#  bun_app:
-#    container_name: ${BUN_APP_NAME}
-#    restart: always
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    depends_on:
-#      db:
-#        condition: service_completed_successfully
-#    ports:
-#      - "8080:8080"
-
 volumes:
   mongo-vol:
     external: false
-
-networks:
-  my_network:
-    driver: bridge

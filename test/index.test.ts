@@ -7,11 +7,11 @@ let server: any;
 beforeAll(() => {
     app = new Elysia();
     app.get("/", () => "Hello Elysia");
-    server = app.listen(3000);
+    server = app.listen(8080);
 });
 
 test('test baase endpoint', async () => {
-    const response = await fetch('http://localhost:3000');
+    const response = await fetch('http://localhost:8080');
     const data = await response.text();
     expect(data).toBe('Hello Elysia');
 });

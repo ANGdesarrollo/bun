@@ -12,6 +12,7 @@ services:
       - ${PORT}:${PORT}
     environment:
       STAGE: ${STAGE}
+      PORT: ${PORT}
       MONGO_DB_NAME: ${MONGO_DB_NAME}
       MONGO_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
       MONGO_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}

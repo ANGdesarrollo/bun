@@ -5,12 +5,11 @@ import { Options } from '@mikro-orm/core';
 import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
 import { ObjectId } from "@mikro-orm/mongodb";
 
+console.log(process.env.MONGO_URL, process.env.PORT)
 const app = new Elysia().get("/", () => "Hello Elysia").listen(process.env.PORT);
 console.log(
     `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
 );
-
-
 
 @Entity()
 export class Item {
