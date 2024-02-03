@@ -1,0 +1,20 @@
+{
+  "name": "docker-bun",
+  "version": "1.0.50",
+  "scripts": {
+    "build:start": "bun build src/index.ts --outdir=dist --target bun",
+    "test": "bun test",
+    "start:dev": "bun run --watch src/index.ts",
+    "start:prod": "bun run dist/index.js"
+  },
+  "dependencies": {
+    "@mikro-orm/core": "^6.0.3",
+    "@mikro-orm/mongo-highlighter": "^1.0.0",
+    "@mikro-orm/mongodb": "^6.0.3",
+    "elysia": "latest"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "module": "src/index.js"
+}

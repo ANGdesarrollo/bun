@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      target: dev
+    volumes:
+      - .:/app/
+      - /app/node_modules
+    container_name: bun_app
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      STAGE: ${STAGE}
+      MONGO_DB_NAME: ${MONGO_DB_NAME}
+      MONGO_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGO_URL: ${MONGO_URL}
+      BUN_APP_NAME: ${BUN_APP_NAME}
+  db:
+    networks:
+      - my_network
+    container_name: ${MONGO_DB_NAME}
+    image: mongo:7.0.5
+    volumes:
+      - mongo-vol:/data/db
+    ports:
+      - "27017:27017"
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+    command: ['--auth']
+
+#  bun_app:
+#    container_name: ${BUN_APP_NAME}
+#    restart: always
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    depends_on:
+#      db:
+#        condition: service_completed_successfully
+#    ports:
+#      - "8080:8080"
+
+volumes:
+  mongo-vol:
+    external: false
+
+networks:
+  my_network:
+    driver: bridge
