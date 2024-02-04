@@ -40,8 +40,9 @@ jobs:
     - name: Build Docker Image and Push
       env:
         NEW_VERSION: ${{ steps.version.outputs.version }}
+        DOCKER_BASE_TAG: ${{ secrets.DOCKER_BASE_TAG }}
       run: |
-        docker buildx build --platform linux/amd64,linux/arm64 -t angdesarrollo/bun-boilerplate:$NEW_VERSION --push .
-        docker buildx build --platform linux/amd64,linux/arm64 -t angdesarrollo/bun-boilerplate:latest --push .
+        docker buildx build --platform linux/amd64,linux/arm64 -t $DOCKER_BASE_TAG:$NEW_VERSION --push .
+        docker buildx build --platform linux/amd64,linux/arm64 -t $DOCKER_BASE_TAG:latest --push .
 #    - name: Build the Docker image
 #      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
