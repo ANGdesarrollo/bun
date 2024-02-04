@@ -31,17 +31,17 @@ jobs:
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-        echo "New version: $NEW_VERSION"
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
     - name: Build Docker Image and Push
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
-        docker buildx build --platform linux/amd64,linux/arm64 -t angdesarrollo/bun-boilerplate:0.0.2 --push .
+        docker buildx build --platform linux/amd64,linux/arm64 -t angdesarrollo/bun-boilerplate:$NEW_VERSION --push .
         docker buildx build --platform linux/amd64,linux/arm64 -t angdesarrollo/bun-boilerplate:latest --push .
 #    - name: Build the Docker image
 #      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
