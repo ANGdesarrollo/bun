@@ -31,5 +31,6 @@ jobs:
     - name: Build Docker Image and Push
       run: |
         docker buildx build --platform linux/amd64,linux/arm64 -t angdesarrollo/bun-boilerplate:0.0.2 --push .
+        docker buildx build --platform linux/amd64,linux/arm64 -t angdesarrollo/bun-boilerplate:latest --push .
 #    - name: Build the Docker image
 #      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
