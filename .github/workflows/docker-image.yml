@@ -25,6 +25,9 @@ jobs:
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
     - name: Build Docker Image
       run: |
         docker buildx build --platform linux/amd64,linux/arm64 -t angdesarrollo/bun-boilerplate:0.0.2 --push .
