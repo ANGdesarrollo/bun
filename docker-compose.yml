@@ -20,8 +20,6 @@ services:
       MONGO_URL: ${MONGO_URL}
       BUN_APP_NAME: ${BUN_APP_NAME}
   db:
-    networks:
-      - my_network
     container_name: ${MONGO_DB_NAME}
     image: mongo:7.0.5
     volumes:
