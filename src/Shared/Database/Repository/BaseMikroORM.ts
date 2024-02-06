@@ -1,17 +1,19 @@
-import {MikroORM, Entity, EntityRepository, MongoEntityManager} from "@mikro-orm/mongodb";
-import {MikroORMInstance} from "../Connection/MikroORMInstance";
+import {EntityRepository, MongoEntityManager, EntityName} from "@mikro-orm/mongodb";
+import {User} from "../../../Modules/Auth/Domain/Entities/User";
 
 
-export class BaseMikroORM<T extends Entity> {
-    protected repository: EntityRepository<T>
-    protected mikroORM: MikroORM<MongoEntityManager>;
-    constructor(entity: T) {
-        this.mikroORM = MikroORMInstance.getInstance()
-    }
-
-    async create() {
-        thi
+export class BaseMikroORM<T> extends EntityRepository<T> {
+    protected em: MongoEntityManager
+    protected entityName: EntityName<T>
+    constructor(_em: MongoEntityManager, entityName: EntityName<T>){
+        super(_em, entityName);
     }
 
 
+    async create(entity: User) {
+        return this.em.create(this.entityName, {
+            username: entity.getUsername(),
+            password: entity.getPassword()
+        })
+    }
 }
