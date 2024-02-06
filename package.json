@@ -8,9 +8,11 @@
     "start:prod": "bun run dist/InitServer.js"
   },
   "dependencies": {
+    "@elysiajs/cors": "^0.8.0",
     "@mikro-orm/core": "^6.0.3",
     "@mikro-orm/mongo-highlighter": "^1.0.0",
     "@mikro-orm/mongodb": "^6.0.3",
+    "@types/cors": "^2.8.17",
     "elysia": "latest",
     "envalid": "^8.0.0"
   },
