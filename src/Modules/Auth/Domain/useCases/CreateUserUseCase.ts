@@ -9,8 +9,6 @@ export class CreateUserUseCase {
     }
 
     async execute(payload: UserPayload) {
-        const user = new User(payload);
-        console.log(user);
-        return this.repository.create(user);
+        return this.repository.create(payload);
     }
 }

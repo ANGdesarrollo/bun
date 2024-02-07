@@ -19,13 +19,15 @@ export const UserEntity = new EntitySchema<User>({
             type: 'string'
         },
         enable: {
-            type: 'boolean'
+            type: 'boolean',
+            default: false
         },
         created_at: {
             type: Date, onCreate: () => new Date()
         },
         updated_at: {
-            type: Date, onUpdate: () => new Date()
+            type: Date, onUpdate: () => new Date(),
+            default: Date
         }
     }
 });

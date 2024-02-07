@@ -1,11 +1,13 @@
 import {UserPayload} from "../Payloads/UserPayload";
+import {Base} from "../../../../Shared/Models/Base";
 
-export class User {
+export class User extends Base{
     private username: string;
     private password: string;
     private enable: boolean;
 
     constructor(payload: UserPayload) {
+        super();
         this.username = payload.username;
         this.password = payload.password;
     }
