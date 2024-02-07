@@ -2,6 +2,13 @@
   "name": "docker-bun",
   "version": "1.0.50",
   "scripts": {
+    "lint:fix": "eslint -c .eslintrc ./src --fix",
+    "lint": "eslint -c .eslintrc ./src",
+    "pre-commit": "lint-staged",
+    "pre-check": "pnpm ts-check && pnpm lint",
+    "prepare": "husky install",
+    "postinstall": "chmod +x .husky/pre-commit",
+    "ts:check": "tsc -p tsconfig.json --noEmit",
     "build:start": "bun build src/InitServer.ts --outdir=dist --target bun",
     "test": "bun test",
     "start:dev": "bun run --watch src/InitServer.ts",
@@ -19,7 +26,15 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "@commitlint/cli": "^18.6.0",
+    "@commitlint/config-conventional": "^18.6.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "bun-types": "latest",
+    "eslint": "^8.56.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "husky": "^9.0.10",
+    "lint-staged": "^15.2.2"
   },
   "module": "src/index.js"
 }

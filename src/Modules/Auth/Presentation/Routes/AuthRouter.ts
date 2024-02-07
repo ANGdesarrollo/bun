@@ -1,13 +1,16 @@
 import Router from 'elysia';
-import {AuthController} from "../Controller/AuthController";
+import { AuthController } from '../Controller/AuthController';
 
-export class AuthRouter {
+export class AuthRouter
+{
     private router: Router;
 
-    constructor() {
+    constructor()
+    {
         this.router = new Router();
     }
-    public start() {
-        this.router.get('/', () => AuthController.create)
+    public start()
+    {
+        this.router.get('/', () => AuthController.create);
     }
 }

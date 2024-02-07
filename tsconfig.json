@@ -1,16 +1,41 @@
 {
+  "reflection": true,
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2022",
-    "moduleResolution": "node",
+    "composite": true,
     "declaration": true,
+    "declarationMap": true,
+    "importHelpers": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": false,
+    "skipDefaultLibCheck": true,
+    "inlineSourceMap": false,
+    "useUnknownInCatchVariables": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "target": "ESNext",
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
     "outDir": "./dist",
+    "baseUrl": "./src",
+    "module": "CommonJS",
     "esModuleInterop": true,
-    "strict": true,
+    "strict": false,
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "types": ["bun-types"]
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "isolatedModules": true,
+    "skipLibCheck": true
   },
-  "include": ["./app"],
-  "exclude": ["node_modules"]
+  "include": [
+    "./src",
+    "./typings/*",
+    ".eslintrc"
+  ]
 }

@@ -1,5 +1,5 @@
-import {EntitySchema} from "@mikro-orm/core";
-import {User} from "../../Domain/Entities/User";
+import { EntitySchema } from '@mikro-orm/core';
+import { User } from '../../Domain/Entities/User';
 
 export const UserEntity = new EntitySchema<User>({
     class: User,

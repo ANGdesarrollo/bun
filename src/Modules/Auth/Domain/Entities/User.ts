@@ -1,38 +1,46 @@
-import {UserPayload} from "../Payloads/UserPayload";
-import {Base} from "../../../../Shared/Models/Base";
+import { UserPayload } from '../Payloads/UserPayload';
+import { Base } from '../../../../Shared/Models/Base';
 
-export class User extends Base{
+export class User extends Base
+{
     private username: string;
     private password: string;
     private enable: boolean;
 
-    constructor(payload: UserPayload) {
+    constructor(payload: UserPayload)
+    {
         super();
         this.username = payload.username;
         this.password = payload.password;
     }
 
-    getUsername(): string {
+    getUsername(): string
+    {
         return this.username;
     }
 
-    setUsername(username: string): void {
+    setUsername(username: string): void
+    {
         this.username = username;
     }
 
-    getPassword(): string {
+    getPassword(): string
+    {
         return this.password;
     }
 
-    setPassword(password: string): void {
+    setPassword(password: string): void
+    {
         this.password = password;
     }
 
-    isEnabled(): boolean {
+    isEnabled(): boolean
+    {
         return this.enable;
     }
 
-    setEnabled(enable: boolean): void {
+    setEnabled(enable: boolean): void
+    {
         this.enable = enable;
     }
 }

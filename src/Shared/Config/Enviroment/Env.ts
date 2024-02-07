@@ -1,5 +1,5 @@
-import {cleanEnv, num, str} from "envalid";
-import { env as environment } from "bun";
+import { cleanEnv, num, str } from 'envalid';
+import { env as environment } from 'bun';
 
 type Env = {
     BUN_APP_NAME: string;
@@ -12,10 +12,10 @@ type Env = {
 }
 export const env: Env = cleanEnv(environment, {
     BUN_APP_NAME: str(),
-    STAGE: str({choices: ['dev', 'prod']}),
+    STAGE: str({ choices: ['dev', 'prod'] }),
     PORT: num(),
     MONGO_DB_NAME: str(),
     MONGO_ROOT_USERNAME: str(),
     MONGO_ROOT_PASSWORD: str(),
     MONGO_URL: str()
-})
+});
