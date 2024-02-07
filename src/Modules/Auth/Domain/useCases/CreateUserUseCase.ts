@@ -7,11 +7,12 @@ export class CreateUserUseCase
     private repository: UserRepository;
     constructor()
     {
-        this.repository = new UserRepository();
+        this.repository = new UserRepository("User");
     }
 
     async execute(payload: UserPayload)
     {
-        return this.repository.create(payload);
+        const user = new User(payload);
+        return this.repository.create(user);
     }
 }

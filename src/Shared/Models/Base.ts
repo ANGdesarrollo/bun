@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 export class Base
 {
-    _id: uuidv4;
+    _id: string;
 
     constructor()
     {

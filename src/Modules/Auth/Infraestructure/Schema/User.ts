@@ -1,7 +1,7 @@
-import { EntitySchema } from '@mikro-orm/core';
+import {EntitySchema} from '@mikro-orm/core';
 import { User } from '../../Domain/Entities/User';
 
-export const UserEntity = new EntitySchema<User>({
+export const UserEntity = new EntitySchema({
     class: User,
     name: 'User',
     tableName: 'users',
@@ -22,12 +22,14 @@ export const UserEntity = new EntitySchema<User>({
             type: 'boolean',
             default: false
         },
-        created_at: {
-            type: Date, onCreate: () => new Date()
+        createdAt: {
+            type: 'Date',
+            onCreate: () => new Date(), nullable: true
         },
-        updated_at: {
-            type: Date, onUpdate: () => new Date(),
-            default: Date
+        updatedAt: {
+            type: 'Date',
+            onCreate: () => new Date(),
+            onUpdate: () => new Date(), nullable: true
         }
     }
 });

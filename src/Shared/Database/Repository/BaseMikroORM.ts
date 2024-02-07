@@ -4,18 +4,19 @@ import { RequestContext } from '@mikro-orm/core';
 import { EntityManager } from '@mikro-orm/mongodb';
 import { MikroORMInstance } from '../Connection/MikroORMInstance';
 
-export abstract class BaseMikroORM<T>
+export abstract class BaseMikroORM<T extends Object>
 {
     protected em: EntityManager;
     protected entityName: string;
-    protected constructor()
+    constructor(entityName: string)
     {
-        this.em = MikroORMInstance.getInstance().em;
+        this.em = MikroORMInstance.getInstance();
+        this.entityName = entityName;
     }
-    async create(entity: T)
+    async create(payload: T)
     {
-        const test = this.em.create('User', entity);
-        await this.em.persistAndFlush(test);
-        return test;
+        const entity = this.em.create(this.entityName, payload);
+        await this.em.persistAndFlush(entity);
+        return entity;
     }
 }
