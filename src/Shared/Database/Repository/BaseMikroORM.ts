@@ -1,19 +1,19 @@
-import {EntityRepository, MongoEntityManager, EntityName} from "@mikro-orm/mongodb";
+import {EntityRepository, MongoEntityManager, EntityName, MongoDriver} from "@mikro-orm/mongodb";
 import {User} from "../../../Modules/Auth/Domain/Entities/User";
+import { RequestContext } from '@mikro-orm/core';
+import { EntityManager } from "@mikro-orm/mongodb";
 
-
-export class BaseMikroORM<T> extends EntityRepository<T> {
-    protected em: MongoEntityManager
+export abstract class BaseMikroORM<T> {
+    protected em: EntityManager
     protected entityName: EntityName<T>
-    constructor(_em: MongoEntityManager, entityName: EntityName<T>){
-        super(_em, entityName);
+    protected constructor(_em: MongoEntityManager, entityName: EntityName<T>){
+        console.log("soy request config", RequestContext.getEntityManager())
+        this.em = RequestContext.getEntityManager() as EntityManager;
     }
 
 
-    async create(entity: User) {
-        return this.em.create(this.entityName, {
-            username: entity.getUsername(),
-            password: entity.getPassword()
-        })
+    create = async(entity: T)=> {
+        console.log("soy this em", this.em)
+        return this.em.create(this.entityName, entity)
     }
 }

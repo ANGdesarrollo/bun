@@ -1,19 +1,19 @@
 import Elysia from "elysia";
 import { env } from "./Shared/Config/Enviroment/Env";
-import {MikroORMInstance} from "./Shared/Database/Connection/MikroORMInstance";
 import { cors } from '@elysiajs/cors'
 import {AuthRouter} from "./Modules/Auth/Presentation/Router/AuthRouter";
+import {MikroORMInstance} from "./Shared/Database/Connection/MikroORMInstance";
 
 export class App {
     app: Elysia
     database: MikroORMInstance
     constructor() {
         this.app = new Elysia();
-        this.database = new MikroORMInstance();
+        this.database = new MikroORMInstance()
     }
 
     public initMiddlewares() {
-        this.app.use(cors())
+        this.app.use(cors());
     }
 
     public initRouters() {
@@ -21,7 +21,7 @@ export class App {
     }
 
     public async initDatabase() {
-        await this.database.initDatabase();
+        return this.database.initDatabase();
     }
     public initApp() {
         this.app.listen(env.PORT)

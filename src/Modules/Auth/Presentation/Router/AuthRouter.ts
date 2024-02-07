@@ -1,4 +1,5 @@
 import Elysia from "elysia";
+import {AuthController} from "../Controller/AuthController";
 
 export class AuthRouter {
     app: Elysia;
@@ -9,6 +10,6 @@ export class AuthRouter {
     }
 
     public start() {
-        this.app.post(`${this.routeBase}`, (request: Request, response: Response) => 'hello');
+        this.app.post(`${this.routeBase}`, AuthController.create);
     }
 }

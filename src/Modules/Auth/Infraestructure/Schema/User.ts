@@ -1,7 +1,7 @@
 import {EntitySchema} from "@mikro-orm/core";
 import {User} from "../../Domain/Entities/User";
 
-export const UserSchema = new EntitySchema<User>({
+export const UserEntity = new EntitySchema<User>({
     class: User,
     name: 'User',
     tableName: 'users',
@@ -28,4 +28,4 @@ export const UserSchema = new EntitySchema<User>({
             type: Date, onUpdate: () => new Date()
         }
     }
-})
+});
