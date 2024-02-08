@@ -1,8 +1,8 @@
 import Elysia from 'elysia';
-import { env } from './Shared/Config/Enviroment/Env';
+import { env } from './Config/Enviroment/Env';
 import { cors } from '@elysiajs/cors';
 import { AuthRouter } from './Modules/Auth/Presentation/Router/AuthRouter';
-import { MikroORMInstance } from './Shared/Database/Connection/MikroORMInstance';
+import { MikroORMInstance } from './Shared/Infraestructure/Connection/MikroORMInstance';
 
 export class App
 {

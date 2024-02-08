@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-export class Base
+import { IBase } from './IBase';
+export class Base implements IBase
 {
     _id: string;
 

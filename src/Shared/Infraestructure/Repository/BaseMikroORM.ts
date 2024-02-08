@@ -1,10 +1,7 @@
-import { EntityRepository, MongoEntityManager, EntityName, MongoDriver } from '@mikro-orm/mongodb';
-import { User } from '../../../Modules/Auth/Domain/Entities/User';
-import { RequestContext } from '@mikro-orm/core';
 import { EntityManager } from '@mikro-orm/mongodb';
 import { MikroORMInstance } from '../Connection/MikroORMInstance';
 
-export abstract class BaseMikroORM<T extends Object>
+export abstract class BaseMikroORM<T extends object>
 {
     protected em: EntityManager;
     protected entityName: string;
@@ -18,5 +15,10 @@ export abstract class BaseMikroORM<T extends Object>
         const entity = this.em.create(this.entityName, payload);
         await this.em.persistAndFlush(entity);
         return entity;
+    }
+
+    async list()
+    {
+        return this.em.findAll(this.entityName);
     }
 }

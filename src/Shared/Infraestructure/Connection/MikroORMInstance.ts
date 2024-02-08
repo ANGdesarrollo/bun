@@ -1,11 +1,11 @@
 import { EntityManager, MikroORM } from '@mikro-orm/mongodb';
-import * as process from 'process';
 import { UserEntity } from '../../../Modules/Auth/Infraestructure/Schema/User';
-import { env } from '../../Config/Enviroment/Env';
+import { env } from '../../../Config/Enviroment/Env';
+import { IMikroORMInstance } from './IMikroORMInstance';
 
 let orm: EntityManager;
 
-export class MikroORMInstance
+export class MikroORMInstance implements IMikroORMInstance
 {
     private entities = [UserEntity];
     async initDatabase()
@@ -19,7 +19,6 @@ export class MikroORMInstance
 
         orm = connection.em as EntityManager;
     }
-
     static getInstance()
     {
         return orm;

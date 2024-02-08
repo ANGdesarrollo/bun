@@ -5,7 +5,7 @@
     "lint:fix": "eslint -c .eslintrc ./src --fix",
     "lint": "eslint -c .eslintrc ./src",
     "pre-commit": "lint-staged",
-    "pre-check": "pnpm ts-check && pnpm lint",
+    "pre-check": "bun ts-check && bun lint",
     "prepare": "husky install",
     "postinstall": "chmod +x .husky/pre-commit",
     "ts:check": "tsc -p tsconfig.json --noEmit",
