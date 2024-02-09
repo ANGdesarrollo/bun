@@ -15,7 +15,7 @@ export class MikroORMInstance implements IMikroORMInstance
             dbName: env.MONGO_DB_NAME,
             clientUrl: env.MONGO_URL,
             allowGlobalContext: true,
-            ensureIndexes: true,
+            ensureIndexes: true
         });
 
         orm = connection.em as EntityManager;

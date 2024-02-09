@@ -3,7 +3,6 @@ import { Base } from '../../../../Shared/Domain/Entities/Base';
 
 export class User extends Base
 {
-
     username: string;
     password: string;
     enable: boolean;
