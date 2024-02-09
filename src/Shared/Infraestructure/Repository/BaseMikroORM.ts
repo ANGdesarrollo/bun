@@ -1,5 +1,5 @@
-import { EntityManager } from '@mikro-orm/mongodb';
 import { MikroORMInstance } from '../Connection/MikroORMInstance';
+import {EntityManager} from "@mikro-orm/mongodb";
 
 export abstract class BaseMikroORM<T extends object>
 {
@@ -7,7 +7,7 @@ export abstract class BaseMikroORM<T extends object>
     protected entityName: string;
     constructor(entityName: string)
     {
-        this.em = MikroORMInstance.getInstance();
+        this.em = MikroORMInstance.getInstance().fork() as EntityManager
         this.entityName = entityName;
     }
     async create(payload: T)
