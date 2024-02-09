@@ -9,6 +9,8 @@ type Env = {
     MONGO_ROOT_USERNAME: string;
     MONGO_ROOT_PASSWORD: string;
     MONGO_URL: string;
+    TOKEN_EXPIRES_IN: number;
+    COOKIE_EXPIRES_IN: number;
 }
 export const env: Env = cleanEnv(environment, {
     BUN_APP_NAME: str(),
@@ -17,5 +19,7 @@ export const env: Env = cleanEnv(environment, {
     MONGO_DB_NAME: str(),
     MONGO_ROOT_USERNAME: str(),
     MONGO_ROOT_PASSWORD: str(),
-    MONGO_URL: str()
+    MONGO_URL: str(),
+    TOKEN_EXPIRES_IN: num(),
+    COOKIE_EXPIRES_IN: num()
 });

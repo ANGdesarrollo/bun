@@ -21,4 +21,22 @@ export abstract class BaseMikroORM<T extends object>
     {
         return this.em.findAll(this.entityName);
     }
+
+    async findById(id: string) {
+        return this.em.findOneOrFail(this.entityName, {
+            _id: id
+        })
+    }
+
+    async getOneBy(condition: Record<string, any>)
+    {
+        const entity = await this.em.findOne(this.entityName, condition);
+
+        if (!entity)
+        {
+            throw new Error(this.entityName);
+        }
+
+        return entity;
+    }
 }
