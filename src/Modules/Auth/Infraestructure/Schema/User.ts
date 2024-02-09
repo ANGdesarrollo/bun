@@ -1,11 +1,11 @@
 import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
 
-@Entity()
+@Entity({
+    tableName: 'users'
+})
 export class UserEntity
 {
-    @PrimaryKey({
-        unique: true
-    })
+    @PrimaryKey()
     _id: string;
 
     @Property({
