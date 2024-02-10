@@ -1,6 +1,5 @@
-import { Context } from 'elysia';
 import { env } from '../../../../Config/Enviroment/Env';
-import {STAGE} from "../../../../Config/Enviroment/IEnv";
+import { STAGE } from '../../../../Config/Enviroment/IEnv';
 export class Cookie
 {
     static generateCookie(auth, accessToken: string)

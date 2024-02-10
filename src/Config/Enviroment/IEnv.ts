@@ -1,5 +1,6 @@
 export type IEnv = {
     BUN_APP_NAME: string;
+    FRONT_END_URL: string;
     STAGE: STAGE;
     PORT: number;
     MONGO_DB_NAME: string;
@@ -10,6 +11,10 @@ export type IEnv = {
     COOKIE_EXPIRES_IN: number;
     TOKEN_SECRET: string;
     COOKIE_SECRET: string;
+    HOST_NODEMAILER: string;
+    PORT_NODEMAILER: number;
+    PASSWORD_NODEMAILER: string;
+    USERNAME_NODEMAILER: string;
 }
 
 export enum STAGE  {

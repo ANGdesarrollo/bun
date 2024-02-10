@@ -1,5 +1,5 @@
 import { MikroORMInstance } from '../Connection/MikroORMInstance';
-import { EntityManager } from '@mikro-orm/mongodb';
+import { EntityManager, MongoDriver, MongoEntityManager } from '@mikro-orm/mongodb';
 
 export abstract class BaseMikroORM<T extends object>
 {
@@ -7,13 +7,13 @@ export abstract class BaseMikroORM<T extends object>
     protected entityName: string;
     constructor(entityName: string)
     {
-        this.em = MikroORMInstance.getInstance().fork();
+        this.em = MikroORMInstance.getInstance();
         this.entityName = entityName;
     }
     async create(payload: T)
     {
         const entity = this.em.create(this.entityName, payload);
-        await this.em.persistAndFlush(entity);
+        await this.em.fork().persistAndFlush(entity);
         return entity;
     }
 

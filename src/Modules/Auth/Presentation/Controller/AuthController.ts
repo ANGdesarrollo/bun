@@ -4,9 +4,10 @@ import { ListUsersUseCase } from '../../Domain/useCases/ListUsersUseCase';
 import { LoginUserUseCase } from '../../Domain/useCases/LoginUserUseCase';
 import { Context } from 'elysia';
 import { env } from '../../../../Config/Enviroment/Env';
-import {STAGE} from "../../../../Config/Enviroment/IEnv";
-import {Cookie} from "../../Domain/Models/Cookie";
-import {JWToken} from "../../Domain/Models/JWToken";
+import { STAGE } from '../../../../Config/Enviroment/IEnv';
+import { Cookie } from '../../Domain/Models/Cookie';
+import { JWToken } from '../../Domain/Models/JWToken';
+import {Email} from "../../../../Shared/Domain/Models/Email";
 
 export class AuthController
 {
@@ -24,17 +25,28 @@ export class AuthController
 
         const accessToken = await JWToken.setJWT({
             username: user.username,
+            role: user.role,
             createdAt: new Date()
         }, jwt);
 
-        Cookie.generateCookie(auth, accessToken)
+        Cookie.generateCookie(auth, accessToken);
 
         return user;
     }
 
+    static async forgotPassword({ jwt, body }) {
+        const recoverToken = JWToken.setJWT({
+            username: body.username,
+            createdAt: new Date()
+        }, jwt);
+        const link = `https://ang-dev.com/${recoverToken}`;
+        await Email.createTransport(templateForgotEmail('alexisgraff123@gmail.com', link));
+
+        return true;
+    }
+
     static async list()
     {
-        console.log("entrer a list")
         const useCase = new ListUsersUseCase();
 
         return await useCase.execute();

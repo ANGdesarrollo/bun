@@ -1,5 +1,5 @@
 export enum IRole {
-    superAdmin = "SuperAdmin",
-    admin = "Admin",
-    user = "User"
+    superAdmin = 'SuperAdmin',
+    admin = 'Admin',
+    user = 'User'
 }

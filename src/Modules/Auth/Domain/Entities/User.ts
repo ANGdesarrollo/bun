@@ -1,6 +1,6 @@
 import { UserPayload } from '../Payloads/UserPayload';
 import { Base } from '../../../../Shared/Domain/Entities/Base';
-import {IRole} from "./IRole";
+import { IRole } from './IRole';
 
 export class User extends Base
 {
@@ -16,7 +16,7 @@ export class User extends Base
         super();
         this.username = payload.username;
         this.password = payload.password;
-        this.role = payload.role
+        this.role = payload.role;
         this.enable = false;
     }
 }

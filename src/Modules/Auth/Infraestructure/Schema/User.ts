@@ -1,5 +1,5 @@
 import { Entity, PrimaryKey, Property, Unique } from '@mikro-orm/core';
-import {IRole} from "../../Domain/Entities/IRole";
+import { IRole } from '../../Domain/Entities/IRole';
 
 @Entity({
     tableName: 'users'
@@ -17,7 +17,7 @@ export class UserEntity
     password: string;
 
     @Property({
-        default: "User"
+        default: IRole.user
     })
     role: string;
 

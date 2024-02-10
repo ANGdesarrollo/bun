@@ -13,9 +13,28 @@ export class LoginUserUseCase
 
     async execute(body: UserPayload)
     {
-        return this.repository.getOneBy({
-            username: body.username,
-            password: body.password
+        const user = await this.repository.getOneBy({
+            username: body.username
         });
+
+        const isPasswordOk = await this.compareHash({
+            dbPassword: user.password,
+            payloadPassword: body.password
+        });
+
+        if (!isPasswordOk)
+        {
+            throw new Error();
+        }
+
+        return user;
+    }
+
+    private async compareHash(payload: {
+        payloadPassword: string,
+        dbPassword: string
+    })
+    {
+        return await Bun.password.verify(payload.payloadPassword, payload.dbPassword);
     }
 }

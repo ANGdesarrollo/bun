@@ -1,4 +1,4 @@
-import {IRole} from "../Entities/IRole";
+import { IRole } from '../Entities/IRole';
 
 export type UserPayload = {
     username: string;
