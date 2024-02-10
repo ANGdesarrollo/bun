@@ -1,5 +1,5 @@
 import { MikroORMInstance } from '../Connection/MikroORMInstance';
-import {EntityManager} from "@mikro-orm/mongodb";
+import { EntityManager } from '@mikro-orm/mongodb';
 
 export abstract class BaseMikroORM<T extends object>
 {
@@ -7,7 +7,7 @@ export abstract class BaseMikroORM<T extends object>
     protected entityName: string;
     constructor(entityName: string)
     {
-        this.em = MikroORMInstance.getInstance().fork() as EntityManager
+        this.em = MikroORMInstance.getInstance().fork();
         this.entityName = entityName;
     }
     async create(payload: T)
@@ -22,10 +22,11 @@ export abstract class BaseMikroORM<T extends object>
         return this.em.findAll(this.entityName);
     }
 
-    async findById(id: string) {
+    async findById(id: string)
+    {
         return this.em.findOneOrFail(this.entityName, {
             _id: id
-        })
+        });
     }
 
     async getOneBy(condition: Record<string, any>)

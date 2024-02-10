@@ -1,22 +1,23 @@
-import {Context} from "elysia";
-import { env } from "../../../../Config/Enviroment/Env";
+import { Context } from 'elysia';
+import { env } from '../../../../Config/Enviroment/Env';
+import {STAGE} from "../../../../Config/Enviroment/IEnv";
 export class Cookie
 {
-    static generateCookie(ctx: Context, cookieName: string, accessToken: string)
+    static generateCookie(auth, accessToken: string)
     {
-        void ctx.cookie.auth.set( {
-            secure: env.STAGE === 'prod',
-            signed: true,
-            httpOnly: true,
+        void auth.set({
+            secrets: env.COOKIE_SECRET,
             maxAge: env.COOKIE_EXPIRES_IN,
-            secrets: accessToken,
-            value: accessToken
-
+            httpOnly: true,
+            path: './',
+            secure: env.STAGE === STAGE.production,
+            value: accessToken,
+            replace: true
         });
     }
 
-    static removeCookie(ctx: Context, cookieName: string)
-    {
-        void ctx.cookie.auth.remove({});
-    }
+    // static removeCookie(ctx: Context, cookieName: string)
+    // {
+    //     void ctx.cookie.auth.remove({});
+    // }
 }

@@ -16,6 +16,6 @@ export class LoginUserUseCase
         return this.repository.getOneBy({
             username: body.username,
             password: body.password
-        })
+        });
     }
 }

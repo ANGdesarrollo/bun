@@ -1,5 +1,4 @@
-import jwt from 'jsonwebtoken';
-import {env} from "bun";
+import { env } from 'bun';
 
 interface IJWT
 {
@@ -9,18 +8,19 @@ interface IJWT
 }
 export class JWToken
 {
-    static setJWT(username: string): string
+    static async setJWT(data: object, jwt): Promise<string>
     {
         return jwt.sign({
-            exp: Math.floor(Date.now() / 1000) + env.NODE_TOKEN_EXPIRES_IN,
-            data: {
-                username
-            }
-        }, env.NODE_TOKEN_SECRET);
+            exp: Math.floor(Date.now() / 1000) + env.TOKEN_EXPIRES_IN,
+            value: data,
+            maxAge: env.TOKEN_EXPIRES_IN,
+            path: '/',
+            httpOnly: true
+        });
     }
 
-    static verifyJWT(accessToken: string): IJWT
-    {
-        return <IJWT>jwt.verify(accessToken, env.NODE_TOKEN_SECRET);
-    }
+    // static verifyJWT(accessToken: string): IJWT
+    // {
+    //     return <IJWT>jwt.verify(accessToken, env.NODE_TOKEN_SECRET);
+    // }
 }
