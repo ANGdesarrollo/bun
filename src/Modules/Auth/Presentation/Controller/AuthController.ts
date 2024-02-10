@@ -8,6 +8,7 @@ import { STAGE } from '../../../../Config/Enviroment/IEnv';
 import { Cookie } from '../../Domain/Models/Cookie';
 import { JWToken } from '../../Domain/Models/JWToken';
 import {Email} from "../../../../Shared/Domain/Models/Email";
+import {templateForgotEmail} from "../../../../Shared/Helpers/templateForgotEmail";
 
 export class AuthController
 {
@@ -35,11 +36,11 @@ export class AuthController
     }
 
     static async forgotPassword({ jwt, body }) {
-        const recoverToken = JWToken.setJWT({
+        const recoverToken = await JWToken.setJWT({
             username: body.username,
             createdAt: new Date()
         }, jwt);
-        const link = `https://ang-dev.com/${recoverToken}`;
+        const link = `${env.FRONT_END_URL}/${recoverToken}`;
         await Email.createTransport(templateForgotEmail('alexisgraff123@gmail.com', link));
 
         return true;
