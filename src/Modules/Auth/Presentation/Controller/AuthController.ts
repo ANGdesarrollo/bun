@@ -1,29 +1,29 @@
 import { CreateUserUseCase } from '../../Domain/useCases/CreateUserUseCase';
-import { UserPayload } from '../../Domain/Payloads/UserPayload';
 import { ListUsersUseCase } from '../../Domain/useCases/ListUsersUseCase';
 import { LoginUserUseCase } from '../../Domain/useCases/LoginUserUseCase';
 import { Context } from 'elysia';
 import { env } from '../../../../Config/Enviroment/Env';
-import { STAGE } from '../../../../Config/Enviroment/IEnv';
 import { Cookie } from '../../Domain/Models/Cookie';
 import { JWToken } from '../../Domain/Models/JWToken';
-import {Email} from "../../../../Shared/Domain/Models/Email";
-import {templateForgotEmail} from "../../../../Shared/Helpers/templateForgotEmail";
+import { Email } from '../../../../Shared/Domain/Models/Email';
+import { templateForgotEmail } from '../../../../Shared/Helpers/templateForgotEmail';
+import { UserLoginPayload, UserRegisterPayload } from '../../Domain/Payloads';
+import { ResetPasswordUserUseCase } from '../../Domain/useCases/ResetPasswordUseCase';
+import { ForgotPasswordUseCase } from '../../Domain/useCases/ForgotPasswordUseCase';
 
 export class AuthController
 {
     static async create(ctx: Context)
     {
-        const body = ctx.body as UserPayload;
+        const payload = ctx.body as UserRegisterPayload;
         const useCase = new CreateUserUseCase();
-        return await useCase.execute(body);
+        return await useCase.execute(payload);
     }
 
     static async login({ jwt, cookie: { auth }, body })
     {
         const useCase = new LoginUserUseCase();
-        const user = await useCase.execute(body as UserPayload);
-
+        const user = await useCase.execute(body as UserLoginPayload);
         const accessToken = await JWToken.setJWT({
             username: user.username,
             role: user.role,
@@ -35,15 +35,33 @@ export class AuthController
         return user;
     }
 
-    static async forgotPassword({ jwt, body }) {
-        const recoverToken = await JWToken.setJWT({
+    static async forgotPassword({ jwt, body })
+    {
+        const token = await JWToken.setJWT({
             username: body.username,
             createdAt: new Date()
         }, jwt);
-        const link = `${env.FRONT_END_URL}/${recoverToken}`;
-        await Email.createTransport(templateForgotEmail('alexisgraff123@gmail.com', link));
+
+        const useCase = new ForgotPasswordUseCase();
+        await useCase.handle({
+            username: body.username,
+            token
+        });
 
         return true;
+    }
+
+    static async resetPassword({ jwt, body })
+    {
+        const token = await JWToken.verifyJWT(body.jwt, jwt);
+        const useCase = new ResetPasswordUserUseCase();
+        const user = await useCase.handle({
+            username: token.value.username,
+            password: body.password
+        });
+
+
+        return user;
     }
 
     static async list()

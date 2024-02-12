@@ -1,17 +1,14 @@
-import { UserPayload } from '../Payloads/UserPayload';
 import { Base } from '../../../../Shared/Domain/Entities/Base';
-import { IRole } from './IRole';
+import { Role } from './Role';
 
 export class User extends Base
 {
     username: string;
     password: string;
-    role: IRole;
+    role: Role;
     enable: boolean;
-    createdAt: Date;
-    updatedAt: Date;
 
-    constructor(payload: UserPayload)
+    constructor(payload: any)
     {
         super();
         this.username = payload.username;

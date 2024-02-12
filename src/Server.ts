@@ -1,4 +1,4 @@
-import Elysia, { Cookie } from 'elysia';
+import Elysia from 'elysia';
 import { env } from './Config/Enviroment/Env';
 import { cors } from '@elysiajs/cors';
 import { AuthRouter } from './Modules/Auth/Presentation/Router/AuthRouter';

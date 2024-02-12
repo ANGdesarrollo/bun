@@ -1,22 +1,19 @@
-import { UserPayload } from '../Payloads/UserPayload';
 import { UserRepository } from '../../Infraestructure/Repository/UserRepository';
-import { User } from '../Entities/User';
-import { UserEntity } from '../../Infraestructure/Schema/User';
+import { UserLoginPayload } from '../Payloads';
 
 export class LoginUserUseCase
 {
     private repository: UserRepository;
     constructor()
     {
-        this.repository = new UserRepository(UserEntity.name);
+        this.repository = new UserRepository();
     }
 
-    async execute(body: UserPayload)
+    async execute(body: UserLoginPayload)
     {
         const user = await this.repository.getOneBy({
             username: body.username
         });
-
         const isPasswordOk = await this.compareHash({
             dbPassword: user.password,
             payloadPassword: body.password

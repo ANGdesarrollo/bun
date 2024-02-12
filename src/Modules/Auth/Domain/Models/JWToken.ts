@@ -2,9 +2,7 @@ import { env } from 'bun';
 
 interface IJWT
 {
-    data: {
-        username: string;
-    }
+    username: string;
 }
 export class JWToken
 {
@@ -19,8 +17,8 @@ export class JWToken
         });
     }
 
-    // static verifyJWT(accessToken: string): IJWT
-    // {
-    //     return <IJWT>jwt.verify(accessToken, env.NODE_TOKEN_SECRET);
-    // }
+    static verifyJWT(accessToken: string, jwt)
+    {
+        return jwt.verify(accessToken);
+    }
 }

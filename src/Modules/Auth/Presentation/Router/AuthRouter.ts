@@ -3,7 +3,7 @@ import { AuthController } from '../Controller/AuthController';
 import { RegisterBodyValidation } from '../Validations/RegisterBodyValidation';
 import { LoginBodyValidation } from '../Validations/LoginBodyValidation';
 import { AuthValidation, privateRoute } from '../../../../Shared/Presentation/Validations/AuthValidation';
-import { IRole } from '../../Domain/Entities/IRole';
+import { Role } from '../../Domain/Entities/Role';
 
 export class AuthRouter
 {
@@ -23,11 +23,12 @@ export class AuthRouter
         this.app.post(`${this.routeBase}/login`, AuthController.login, {
             body: LoginBodyValidation
         });
-        this.app.post(`${this.routeBase}/forgot-password`, AuthController.forgotPassword)
+        this.app.post(`${this.routeBase}/forgot-password`, AuthController.forgotPassword);
         this.app.get(`${this.routeBase}`, AuthController.list, {
             cookie: AuthValidation,
             // @ts-ignore
             beforeHandle: async(ctx) => await privateRoute(ctx)
         });
+        this.app.put(`${this.routeBase}/reset-password`, AuthController.resetPassword);
     }
 }
