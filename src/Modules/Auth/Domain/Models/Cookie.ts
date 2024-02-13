@@ -5,13 +5,14 @@ export class Cookie
     static generateCookie(auth, accessToken: string)
     {
         void auth.set({
-            secrets: env.COOKIE_SECRET,
+            secret: env.COOKIE_SECRET,
             maxAge: env.COOKIE_EXPIRES_IN,
             httpOnly: true,
             path: './',
             secure: env.STAGE === STAGE.production,
             value: accessToken,
-            replace: true
+            replace: true,
+            sign: ['auth']
         });
     }
 

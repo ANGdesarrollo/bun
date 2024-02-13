@@ -4,6 +4,7 @@ import { cors } from '@elysiajs/cors';
 import { AuthRouter } from './Modules/Auth/Presentation/Router/AuthRouter';
 import { MikroORMInstance } from './Shared/Infraestructure/Connection/MikroORMInstance';
 import { jwt } from '@elysiajs/jwt';
+import { RequestContext } from '@mikro-orm/core';
 export class App
 {
     app: Elysia;

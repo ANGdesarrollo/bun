@@ -1,5 +1,5 @@
 import { MikroORMInstance } from '../Connection/MikroORMInstance';
-import { EntityManager, MongoDriver, MongoEntityManager } from '@mikro-orm/mongodb';
+import { EntityManager } from '@mikro-orm/mongodb';
 import { IBaseMikroORM } from './IBaseMikroORM';
 
 export abstract class BaseMikroORM<T extends object> implements IBaseMikroORM<T>
@@ -26,7 +26,7 @@ export abstract class BaseMikroORM<T extends object> implements IBaseMikroORM<T>
 
     async getOneBy(condition: Record<string, any>): Promise<T>
     {
-        const entity = await this.em.fork().findOne(this.entityName, condition) as T;
+        const entity = await this.em.findOne(this.entityName, condition) as T;
 
         if (!entity)
         {

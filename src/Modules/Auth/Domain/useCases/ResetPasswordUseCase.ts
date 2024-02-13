@@ -28,6 +28,6 @@ export class ResetPasswordUserUseCase extends UserRepository
             cost: 4
         });
 
-        return this.userRepository.update(<User>user);
+        return this.userRepository.update(user);
     }
 }

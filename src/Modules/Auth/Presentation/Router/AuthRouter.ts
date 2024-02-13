@@ -30,5 +30,13 @@ export class AuthRouter
             beforeHandle: async(ctx) => await privateRoute(ctx)
         });
         this.app.put(`${this.routeBase}/reset-password`, AuthController.resetPassword);
+        this.app.get(`${this.routeBase}/me`, AuthController.getMe, {
+            cookie: AuthValidation,
+            beforeHandle: () =>
+            {}
+        });
+        this.app.get(`${this.routeBase}/refresh-token`,AuthController.refreshCookie, {
+            cookie: AuthValidation
+        })
     }
 }
