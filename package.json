@@ -30,6 +30,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@elysiajs/swagger": "^0.8.5",
     "@commitlint/cli": "^18.6.0",
     "@commitlint/config-conventional": "^18.6.0",
     "@types/bun": "^1.0.5",

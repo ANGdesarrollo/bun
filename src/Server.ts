@@ -3,6 +3,7 @@ import { env } from './Config/Enviroment/Env';
 import { cors } from '@elysiajs/cors';
 import { MikroORMInstance } from './Shared/Infraestructure/Connection/MikroORMInstance';
 import { AuthRouter } from './Modules/Auth/Presentation/Router/AuthRouter';
+import swagger from "@elysiajs/swagger";
 
 export class App
 {
@@ -17,6 +18,7 @@ export class App
     public initMiddlewares()
     {
         this.app.use(cors());
+        this.app.use(swagger());
     }
 
     public initRouters()
