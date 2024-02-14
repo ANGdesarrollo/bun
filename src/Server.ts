@@ -1,24 +1,41 @@
-import Elysia from "elysia";
-import { env } from "./Config/Enviroment/Env";
-import {MikroORMConnection} from "./Database/MikroORMConnection";
+import Elysia from 'elysia';
+import { env } from './Config/Enviroment/Env';
+import { cors } from '@elysiajs/cors';
+import { AuthRouter } from './Modules/Auth/Presentation/Router/AuthRouter';
+import { MikroORMInstance } from './Shared/Infraestructure/Connection/MikroORMInstance';
+import cookie from 'cookie';
 
-export class App {
-    app: Elysia
-    database: MikroORMConnection
-    constructor() {
+export class App
+{
+    app: Elysia;
+    database: MikroORMInstance;
+    constructor()
+    {
         this.app = new Elysia();
-        this.database = new MikroORMConnection();
+        this.database = new MikroORMInstance();
     }
 
-    public async initDatabase() {
-        await this.database.initDatabase();
+    public initMiddlewares()
+    {
+        this.app.use(cors());
     }
-    public initApp() {
+
+    public initRouters()
+    {
+        new AuthRouter(this.app).start();
+    }
+
+    public async initDatabase()
+    {
+        return this.database.initDatabase();
+    }
+    public initApp()
+    {
+        this.app.listen(env.PORT);
         console.log(
             `🦊 Elysia is running at ${env.PORT}`
         );
     }
 }
-
 
 

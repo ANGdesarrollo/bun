@@ -1,36 +1,19 @@
-import {UserPayload} from "../Payloads/UserPayload";
+import { Base } from '../../../../Shared/Domain/Entities/Base';
+import { Role } from './Role';
 
-export class User {
-    private username: string;
-    private password: string;
-    private enable: boolean;
+export class User extends Base
+{
+    username: string;
+    password: string;
+    role: Role;
+    enable: boolean;
 
-    constructor(payload: UserPayload) {
+    constructor(payload: any)
+    {
+        super();
         this.username = payload.username;
         this.password = payload.password;
-    }
-
-    getUsername(): string {
-        return this.username;
-    }
-
-    setUsername(username: string): void {
-        this.username = username;
-    }
-
-    getPassword(): string {
-        return this.password;
-    }
-
-    setPassword(password: string): void {
-        this.password = password;
-    }
-
-    isEnabled(): boolean {
-        return this.enable;
-    }
-
-    setEnabled(enable: boolean): void {
-        this.enable = enable;
+        this.role = payload.role;
+        this.enable = false;
     }
 }

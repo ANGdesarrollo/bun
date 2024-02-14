@@ -1,4 +1,4 @@
-export type UserPayload = {
+export type UserResetPasswordPayload = {
     username: string;
     password: string;
 }

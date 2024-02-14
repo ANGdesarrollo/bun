@@ -3,6 +3,11 @@ FROM oven/bun:canary-alpine AS dev-deps
 
 WORKDIR /app
 COPY package.json ./
+COPY ./.husky ./.husky
+COPY ./.commitlintrc.json ./
+COPY ./lint-staged.config.js ./
+COPY ./.eslintrc ./
+COPY ./tsconfig.json ./
 RUN bun install
 
 # Instala dependencias de producción
@@ -29,6 +34,12 @@ FROM oven/bun:canary-alpine AS dev
 WORKDIR /app
 COPY --from=dev-deps /app/node_modules ./node_modules
 COPY ./src ./src
+COPY ./.husky ./.husky
+COPY ./lint-staged.config.js ./
+COPY ./tsconfig.json ./
+COPY .eslintrc ./
+
+CMD ["bun", "lint:fix"]
 CMD ["bun", "start:dev"]
 
 # Crea una etapa prod final para produccion
