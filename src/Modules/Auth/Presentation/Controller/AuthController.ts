@@ -2,7 +2,7 @@ import { CreateUserUseCase } from '../../Domain/useCases/CreateUserUseCase';
 import { LoginUserUseCase } from '../../Domain/useCases/LoginUserUseCase';
 import { Context } from 'elysia';
 import { JWToken } from '../../Domain/Models/JWToken';
-import { UserRegisterPayload } from '../../Domain/Payloads';
+import {UserRegisterPayload, UserResetPasswordPayload} from '../../Domain/Payloads';
 import { GetMeUseCase } from '../../Domain/useCases/GetMeUseCase';
 import { GetMeTransformer } from '../Transformers/GetMeTransformer';
 import { LoginTransformer } from '../Transformers/LoginTransformer';
@@ -45,9 +45,9 @@ export class AuthController
         };
     }
 
-    static async getMe({ cookie: { auth } })
+    static async getMe(ctx: Context)
     {
-        const token = JWToken.verifyJWT(auth._value);
+        const token = JWToken.verifyJWT(ctx.cookie.auth.get());
         const useCase = new GetMeUseCase();
         const user = await useCase.execute({
             username: token.data.username
@@ -60,11 +60,12 @@ export class AuthController
         };
     }
 
-    static async forgotPassword({ params })
+    static async forgotPassword(ctx: Context)
     {
+        const params = ctx.params
         const useCase = new ForgotPasswordUseCase();
         await useCase.handle({
-            username: params.username
+            username: ctx.params
         });
 
         return {
@@ -74,9 +75,10 @@ export class AuthController
         };
     }
 
-    static async resetPassword({ cookie: { auth }, body })
+    static async resetPassword(ctx: Context)
     {
-        const token = JWToken.verifyJWT(auth._value);
+        const body = ctx.body as UserResetPasswordPayload
+        const token = JWToken.verifyJWT(ctx.cookie.auth.get());
         const useCase = new ResetPasswordUserUseCase();
         const user = await useCase.handle({
             username: token.data.username,
@@ -90,9 +92,9 @@ export class AuthController
         };
     }
 
-    static async refreshCookie(ctx)
+    static async refreshCookie(ctx: Context)
     {
-        const token = JWToken.verifyJWT(ctx.cookie.auth._value);
+        const token = JWToken.verifyJWT(ctx.cookie.auth.get());
         const authToken = JWToken.setJWT({
             ...token.data
         });

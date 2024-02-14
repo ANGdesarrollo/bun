@@ -7,33 +7,33 @@ import { Role } from '../../Domain/Entities/Role';
 export class UserEntity
 {
     @PrimaryKey()
-    _id: string;
+    _id!: string;
 
     @Property()
     @Unique()
-    username: string;
+    username!: string;
 
     @Property()
-    password: string;
+    password!: string;
 
     @Enum({
         items: [Role.user, Role.admin, Role.superAdmin]
     })
-    role: Role;
+    role!: Role;
 
     @Property({
         default: false
     })
-    enable: boolean;
+    enable!: boolean;
 
     @Property({ onCreate: () => new Date() })
-    createdAt: string;
+    createdAt!: Date;
 
     @Property({
         onUpdate: () => new Date(),
         onCreate: () => new Date()
     })
-    updatedAt: Date;
+    updatedAt!: Date;
 }
 
 

@@ -7,7 +7,7 @@ export class User extends Base
     username: string;
     password: string;
     role: Role;
-    enable?: boolean;
+    enable: boolean;
 
     constructor(payload: UserDomain)
     {

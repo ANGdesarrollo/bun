@@ -22,7 +22,7 @@
     "baseUrl": "./src",
     "module": "CommonJS",
     "esModuleInterop": true,
-    "strict": false,
+    "strict": true,
     "typeRoots": [
       "./node_modules/@types"
     ],

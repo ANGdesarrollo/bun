@@ -16,7 +16,14 @@ export class CreateUserUseCase
             algorithm: 'bcrypt',
             cost: 4
         });
-        const user = new User(payload);
-        return this.repository.create(user);
+
+        const user = new User({
+            enable: false,
+            password: payload.password,
+            username: payload.username,
+            role: payload.role
+        })
+
+        return this.repository.create(payload);
     }
 }
