@@ -1,5 +1,7 @@
 import { UserRepository } from '../../Infraestructure/Repository/UserRepository';
 import { UserLoginPayload } from '../Payloads';
+import { JWToken } from '../Models/JWToken';
+import { Cookie } from '../Models/Cookie';
 
 export class LoginUserUseCase
 {
@@ -21,10 +23,20 @@ export class LoginUserUseCase
 
         if (!isPasswordOk)
         {
-            throw new Error();
+            throw new Error('Error at logging');
         }
 
-        return user;
+        const authToken = JWToken.setJWT({
+            username: user.username,
+            role: user.role
+        });
+
+        const  cookie = Cookie.generateCookie('auth', authToken);
+
+        return {
+            user,
+            cookie
+        };
     }
 
     private async compareHash(payload: {

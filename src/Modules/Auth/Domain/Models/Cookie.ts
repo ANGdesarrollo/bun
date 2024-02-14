@@ -1,23 +1,21 @@
 import { env } from '../../../../Config/Enviroment/Env';
 import { STAGE } from '../../../../Config/Enviroment/IEnv';
+import cookie from 'cookie';
+
 export class Cookie
 {
-    static generateCookie(auth, accessToken: string)
+    static generateCookie(cookieName: string, jwtToken: string)
     {
-        void auth.set({
-            secret: env.COOKIE_SECRET,
+        const cookieOptions = {
             maxAge: env.COOKIE_EXPIRES_IN,
             httpOnly: true,
-            path: './',
+            path: '/',
             secure: env.STAGE === STAGE.production,
-            value: accessToken,
+            value: jwtToken,
             replace: true,
             sign: ['auth']
-        });
-    }
+        };
 
-    // static removeCookie(ctx: Context, cookieName: string)
-    // {
-    //     void ctx.cookie.auth.remove({});
-    // }
+        return cookie.serialize(cookieName, jwtToken, cookieOptions);
+    }
 }

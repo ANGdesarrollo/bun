@@ -14,7 +14,6 @@ export const env: IEnv = cleanEnv(environment, {
     TOKEN_EXPIRES_IN: num(),
     COOKIE_EXPIRES_IN: num(),
     TOKEN_SECRET: str(),
-    COOKIE_SECRET: str(),
     HOST_NODEMAILER: str(),
     PORT_NODEMAILER: num(),
     PASSWORD_NODEMAILER: str(),

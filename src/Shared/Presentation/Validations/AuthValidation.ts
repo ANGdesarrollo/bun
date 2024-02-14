@@ -1,10 +1,9 @@
 import { t } from 'elysia';
 import { Role } from '../../../Modules/Auth/Domain/Entities/Role';
+import { env } from '../../../Config/Enviroment/Env';
 
 export const AuthValidation = t.Cookie({
-    auth: t.String({
-        error: 'Unauthorized'
-    })
+    auth: t.String()
 });
 
 export const privateRoute = async({ jwt, cookie: { auth } }) =>

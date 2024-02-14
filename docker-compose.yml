@@ -23,7 +23,7 @@ services:
       TOKEN_EXPIRES_IN: ${TOKEN_EXPIRES_IN},
       COOKIE_EXPIRES_IN: ${COOKIE_EXPIRES_IN}
       TOKEN_SECRET: ${TOKEN_SECRET}
-      COOKIE_SECRET: ${COOKIE_SECRET}
+
   db:
     container_name: ${MONGO_DB_NAME}
     image: mongo:7.0.5

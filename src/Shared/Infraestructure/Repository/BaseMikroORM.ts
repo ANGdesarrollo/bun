@@ -13,9 +13,9 @@ export abstract class BaseMikroORM<T extends object> implements IBaseMikroORM<T>
     }
     async create(payload: T): Promise<T>
     {
-        const entity = this.em.create(this.entityName, payload) as T;
+        const entity = this.em.create(this.entityName, payload);
         await this.em.fork().persistAndFlush(entity);
-
+        // @ts-ignore
         return entity;
     }
 
@@ -27,7 +27,6 @@ export abstract class BaseMikroORM<T extends object> implements IBaseMikroORM<T>
     async getOneBy(condition: Record<string, any>): Promise<T>
     {
         const entity = await this.em.findOne(this.entityName, condition) as T;
-
         if (!entity)
         {
             throw new Error(this.entityName);

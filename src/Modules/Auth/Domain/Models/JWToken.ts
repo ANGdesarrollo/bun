@@ -1,24 +1,32 @@
-import { env } from 'bun';
+import jwt from 'jsonwebtoken';
+import { env } from '../../../../Config/Enviroment/Env';
+import { Role } from '../Entities/Role';
 
-interface IJWT
+interface DecodedJWT
 {
-    username: string;
+    data: {
+        username: string;
+    }
 }
 export class JWToken
 {
-    static async setJWT(data: object, jwt): Promise<string>
+    static setJWT(payload: {
+        username: string;
+        role?: Role
+    }): string
     {
         return jwt.sign({
             exp: Math.floor(Date.now() / 1000) + env.TOKEN_EXPIRES_IN,
-            value: data,
-            maxAge: env.TOKEN_EXPIRES_IN,
             path: '/',
-            httpOnly: true
-        });
+            data: {
+                ...payload,
+                createdAt: new Date()
+            }
+        }, env.TOKEN_SECRET);
     }
 
-    static verifyJWT(accessToken: string, jwt)
+    static verifyJWT(accessToken: string): DecodedJWT
     {
-        return jwt.verify(accessToken);
+        return <DecodedJWT>jwt.verify(accessToken, env.TOKEN_SECRET);
     }
 }

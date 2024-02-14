@@ -3,8 +3,8 @@ import { env } from './Config/Enviroment/Env';
 import { cors } from '@elysiajs/cors';
 import { AuthRouter } from './Modules/Auth/Presentation/Router/AuthRouter';
 import { MikroORMInstance } from './Shared/Infraestructure/Connection/MikroORMInstance';
-import { jwt } from '@elysiajs/jwt';
-import { RequestContext } from '@mikro-orm/core';
+import cookie from 'cookie';
+
 export class App
 {
     app: Elysia;
@@ -18,12 +18,6 @@ export class App
     public initMiddlewares()
     {
         this.app.use(cors());
-        this.app.use(
-            jwt({
-                name: 'jwt',
-                secret: env.TOKEN_SECRET
-            })
-        );
     }
 
     public initRouters()

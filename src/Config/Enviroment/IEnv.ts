@@ -10,7 +10,6 @@ export type IEnv = {
     TOKEN_EXPIRES_IN: number;
     COOKIE_EXPIRES_IN: number;
     TOKEN_SECRET: string;
-    COOKIE_SECRET: string;
     HOST_NODEMAILER: string;
     PORT_NODEMAILER: number;
     PASSWORD_NODEMAILER: string;

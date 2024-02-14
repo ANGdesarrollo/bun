@@ -1,13 +1,17 @@
 import { CreateUserUseCase } from '../../Domain/useCases/CreateUserUseCase';
-import { ListUsersUseCase } from '../../Domain/useCases/ListUsersUseCase';
 import { LoginUserUseCase } from '../../Domain/useCases/LoginUserUseCase';
 import { Context } from 'elysia';
-import { Cookie } from '../../Domain/Models/Cookie';
 import { JWToken } from '../../Domain/Models/JWToken';
-import { UserLoginPayload, UserRegisterPayload } from '../../Domain/Payloads';
-import { ResetPasswordUserUseCase } from '../../Domain/useCases/ResetPasswordUseCase';
-import { ForgotPasswordUseCase } from '../../Domain/useCases/ForgotPasswordUseCase';
+import { UserRegisterPayload } from '../../Domain/Payloads';
 import { GetMeUseCase } from '../../Domain/useCases/GetMeUseCase';
+import { GetMeTransformer } from '../Transformers/GetMeTransformer';
+import { LoginTransformer } from '../Transformers/LoginTransformer';
+import { ForgotPasswordUseCase } from '../../Domain/useCases/ForgotPasswordUseCase';
+import { RegisterTransformer } from '../Transformers/RegisterTransformer';
+import { ResetPasswordUserUseCase } from '../../Domain/useCases/ResetPasswordUseCase';
+import { Cookie } from '../../Domain/Models/Cookie';
+import { ResetPasswordTransformer } from '../Transformers/ResetPasswordTransformer';
+import { ListUsersUseCase } from '../../Domain/useCases/ListUsersUseCase';
 
 export class AuthController
 {
@@ -15,73 +19,90 @@ export class AuthController
     {
         const payload = ctx.body as UserRegisterPayload;
         const useCase = new CreateUserUseCase();
-        return await useCase.execute(payload);
+        const user = await useCase.execute(payload);
+
+        ctx.set.status = 201;
+
+        return {
+            status: true,
+            statusCode: 201,
+            data: new RegisterTransformer(user)
+        };
     }
 
-    static async login({ jwt, cookie: { auth }, body })
+    static async login(ctx: Context)
     {
+        const body = ctx.body as UserRegisterPayload;
         const useCase = new LoginUserUseCase();
-        const user = await useCase.execute(body as UserLoginPayload);
-        const accessToken = await JWToken.setJWT({
-            username: user.username,
-            role: user.role,
-            createdAt: new Date()
-        }, jwt);
+        const response = await useCase.execute(body);
 
-        Cookie.generateCookie(auth, accessToken);
+        ctx.set.headers['Set-Cookie'] = response.cookie;
 
-        return user;
+        return {
+            status: true,
+            statusCode: 200,
+            data: new LoginTransformer(response.user)
+        };
     }
 
-    static async getMe({ jwt, cookie: { auth }, body })
+    static async getMe({ cookie: { auth } })
     {
-        const token = await jwt.verify(auth.value);
+        const token = JWToken.verifyJWT(auth._value);
         const useCase = new GetMeUseCase();
-        return await useCase.execute({
-            username: token.value.username
+        const user = await useCase.execute({
+            username: token.data.username
         });
+
+        return {
+            status: true,
+            statusCode: 200,
+            data: new GetMeTransformer(user)
+        };
     }
 
-    static async forgotPassword({ jwt, body })
+    static async forgotPassword({ params })
     {
-        const token = await JWToken.setJWT({
-            username: body.username,
-            createdAt: new Date()
-        }, jwt);
-
         const useCase = new ForgotPasswordUseCase();
         await useCase.handle({
-            username: body.username,
-            token
+            username: params.username
         });
 
-        return true;
+        return {
+            status: true,
+            statusCode: 200,
+            data: 'Email correctly sent'
+        };
     }
 
-    static async resetPassword({ jwt, body })
+    static async resetPassword({ cookie: { auth }, body })
     {
-        const token = await JWToken.verifyJWT(body.jwt, jwt);
+        const token = JWToken.verifyJWT(auth._value);
         const useCase = new ResetPasswordUserUseCase();
         const user = await useCase.handle({
-            username: token.value.username,
+            username: token.data.username,
             password: body.password
         });
 
-
-        return user;
+        return {
+            status: true,
+            statusCode: 200,
+            data: new ResetPasswordTransformer(user)
+        };
     }
 
-    static async refreshCookie({ jwt, cookie})
+    static async refreshCookie(ctx)
     {
-        const token = await jwt.verify(cookie.auth.value);
-        const accessToken = await JWToken.setJWT({
-            ...token.data,
-            createdAt: new Date()
-        }, jwt);
-        cookie.auth.remove();
-        Cookie.generateCookie(cookie.auth, accessToken);
+        const token = JWToken.verifyJWT(ctx.cookie.auth._value);
+        const authToken = JWToken.setJWT({
+            ...token.data
+        });
+        ctx.set.headers['Set-Cookie'] = Cookie.generateCookie('auth', authToken);
 
-        return true;
+        return {
+            status: true,
+            statusCode: 200,
+            data: 'Cookie correctly refreshed'
+        };
     }
 
     static async list()
