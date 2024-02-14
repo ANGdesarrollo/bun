@@ -2,7 +2,7 @@ import Elysia from 'elysia';
 import { AuthController } from '../Controller/AuthController';
 import { RegisterBodyValidation } from '../Validations/RegisterBodyValidation';
 import { LoginBodyValidation } from '../Validations/LoginBodyValidation';
-import { AuthValidation, privateRoute } from '../../../../Shared/Presentation/Validations/AuthValidation';
+import { AuthValidation } from '../../../../Shared/Presentation/Validations/AuthValidation';
 
 export class AuthRouter
 {
@@ -24,9 +24,7 @@ export class AuthRouter
         });
         this.app.get(`${this.routeBase}/forgot-password/:username`, AuthController.forgotPassword);
         this.app.get(`${this.routeBase}`, AuthController.list, {
-            cookie: AuthValidation,
-            // @ts-ignore
-            beforeHandle: async(ctx) => await privateRoute(ctx)
+            cookie: AuthValidation
         });
         this.app.put(`${this.routeBase}/reset-password`, AuthController.resetPassword);
         this.app.get(`${this.routeBase}/me`, AuthController.getMe, {

@@ -1,6 +1,7 @@
-import { UserRepository } from '../../Infraestructure/Repository/UserRepository';
-import { User } from '../Entities/User';
 import { UserRegisterPayload } from '../Payloads';
+import { UserRepository } from '../../Infraestructure/Repository/UserRepository';
+import { v4 as uuidv4 } from 'uuid';
+import { UserDomain } from '../Entities/UserDomain';
 
 export class CreateUserUseCase
 {
@@ -16,7 +17,17 @@ export class CreateUserUseCase
             algorithm: 'bcrypt',
             cost: 4
         });
-        const user = new User(payload);
+
+        const user: UserDomain = {
+            _id: uuidv4(),
+            username: payload.username,
+            password: payload.password,
+            role: payload.role,
+            enable: false,
+            createdAt: new Date(),
+            updatedAt: new Date()
+        };
+
         return this.repository.create(user);
     }
 }

@@ -1,8 +1,9 @@
 import { BaseMikroORM } from '../../../../Shared/Infraestructure/Repository/BaseMikroORM';
-import { UserEntity } from '../Schema/User';
-import { User } from '../../Domain/Entities/User';
+import { UserDomain } from '../../Domain/Entities/UserDomain';
+import { UserEntity } from '../Schema';
+import { UserRegisterPayload } from '../../Domain/Payloads';
 
-export class UserRepository extends BaseMikroORM<User>
+export class UserRepository extends BaseMikroORM<UserDomain, UserRegisterPayload>
 {
     constructor()
     {
