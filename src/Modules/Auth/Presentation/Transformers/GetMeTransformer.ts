@@ -1,5 +1,6 @@
 import { User } from '../../Domain/Entities/User';
 import { Role } from '../../Domain/Entities/Role';
+import { UserDomain } from '../../Domain/Entities/UserDomain';
 
 export class GetMeTransformer
 {
@@ -7,7 +8,7 @@ export class GetMeTransformer
     private role: Role;
     private enable: boolean;
     private id: string;
-    constructor(payload: User)
+    constructor(payload: UserDomain)
     {
         this.id = payload._id;
         this.username = payload.username;

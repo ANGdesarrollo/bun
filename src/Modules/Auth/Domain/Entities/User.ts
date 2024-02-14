@@ -1,14 +1,15 @@
 import { Base } from '../../../../Shared/Domain/Entities/Base';
 import { Role } from './Role';
+import { UserDomain } from './UserDomain';
 
 export class User extends Base
 {
     username: string;
     password: string;
     role: Role;
-    enable: boolean;
+    enable?: boolean;
 
-    constructor(payload: any)
+    constructor(payload: UserDomain)
     {
         super();
         this.username = payload.username;

@@ -1,4 +1,4 @@
-import { Entity, PrimaryKey, Property, Unique } from '@mikro-orm/core';
+import { Entity, Enum, PrimaryKey, Property, Unique } from '@mikro-orm/core';
 import { Role } from '../../Domain/Entities/Role';
 
 @Entity({
@@ -16,10 +16,10 @@ export class UserEntity
     @Property()
     password: string;
 
-    @Property({
-        default: Role.user
+    @Enum({
+        items: [Role.user, Role.admin, Role.superAdmin]
     })
-    role: string;
+    role: Role;
 
     @Property({
         default: false

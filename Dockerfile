@@ -5,9 +5,6 @@ WORKDIR /app
 COPY package.json ./
 COPY ./.husky ./.husky
 COPY ./.commitlintrc.json ./
-COPY ./lint-staged.config.js ./
-COPY ./.eslintrc ./
-COPY ./tsconfig.json ./
 RUN bun install
 
 # Instala dependencias de producción

@@ -6,14 +6,14 @@ export const AuthValidation = t.Cookie({
     auth: t.String()
 });
 
-export const privateRoute = async({ jwt, cookie: { auth } }) =>
-{
-    const user = await jwt.verify(auth.value);
-
-    if (user.value.role !== Role.admin && Role.superAdmin)
-    {
-        throw new Error('Unauthorized');
-    }
-};
+// export const privateRoute = async({ jwt, cookie: { auth } }) =>
+// {
+//     const user = await jwt.verify(auth.value);
+//
+//     if (user.value.role !== Role.admin && Role.superAdmin)
+//     {
+//         throw new Error('Unauthorized');
+//     }
+// };
 
 
