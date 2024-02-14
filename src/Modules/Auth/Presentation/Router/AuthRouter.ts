@@ -25,8 +25,6 @@ export class AuthRouter
         this.app.get(`${this.routeBase}/forgot-password/:username`, AuthController.forgotPassword);
         this.app.get(`${this.routeBase}`, AuthController.list, {
             cookie: AuthValidation
-            // @ts-ignore
-            // beforeHandle: async(ctx) => await privateRoute(ctx)
         });
         this.app.put(`${this.routeBase}/reset-password`, AuthController.resetPassword);
         this.app.get(`${this.routeBase}/me`, AuthController.getMe, {

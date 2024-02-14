@@ -1,9 +1,9 @@
-import { EntityManager, MikroORM, MongoDriver, ReflectMetadataProvider } from '@mikro-orm/mongodb';
+import { EntityManager, MikroORM, MongoDriver, MongoEntityManager, ReflectMetadataProvider } from '@mikro-orm/mongodb';
 import { env } from '../../../Config/Enviroment/Env';
 import { IMikroORMInstance } from './IMikroORMInstance';
 import { UserEntity } from '../../../Modules/Auth/Infraestructure/Schema';
 
-let orm: EntityManager;
+let orm: MongoEntityManager;
 
 export class MikroORMInstance implements IMikroORMInstance
 {

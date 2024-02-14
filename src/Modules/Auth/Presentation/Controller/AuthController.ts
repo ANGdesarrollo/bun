@@ -2,7 +2,7 @@ import { CreateUserUseCase } from '../../Domain/useCases/CreateUserUseCase';
 import { LoginUserUseCase } from '../../Domain/useCases/LoginUserUseCase';
 import { Context } from 'elysia';
 import { JWToken } from '../../Domain/Models/JWToken';
-import {UserRegisterPayload, UserResetPasswordPayload} from '../../Domain/Payloads';
+import { UserRegisterPayload, UserResetPasswordPayload } from '../../Domain/Payloads';
 import { GetMeUseCase } from '../../Domain/useCases/GetMeUseCase';
 import { GetMeTransformer } from '../Transformers/GetMeTransformer';
 import { LoginTransformer } from '../Transformers/LoginTransformer';
@@ -62,7 +62,7 @@ export class AuthController
 
     static async forgotPassword(ctx: Context)
     {
-        const params = ctx.params
+        const params = ctx.params;
         const useCase = new ForgotPasswordUseCase();
         await useCase.handle({
             username: ctx.params
@@ -77,7 +77,7 @@ export class AuthController
 
     static async resetPassword(ctx: Context)
     {
-        const body = ctx.body as UserResetPasswordPayload
+        const body = ctx.body as UserResetPasswordPayload;
         const token = JWToken.verifyJWT(ctx.cookie.auth.get());
         const useCase = new ResetPasswordUserUseCase();
         const user = await useCase.handle({

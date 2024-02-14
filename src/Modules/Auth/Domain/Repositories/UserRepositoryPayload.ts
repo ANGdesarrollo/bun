@@ -1,6 +1,6 @@
-import {Role} from "../Entities/Role";
+import { Role } from '../Entities/Role';
 
-export interface UserRepository {
+export interface UserRepositoryPayload {
     username: string;
     password: string;
     role: Role;

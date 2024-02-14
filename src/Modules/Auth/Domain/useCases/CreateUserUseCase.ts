@@ -1,6 +1,7 @@
-import { UserRepository } from '../../Infraestructure/Repository/UserRepository';
-import { User } from '../Entities/User';
 import { UserRegisterPayload } from '../Payloads';
+import { UserRepository } from '../../Infraestructure/Repository/UserRepository';
+import { v4 as uuidv4 } from 'uuid';
+import { UserDomain } from '../Entities/UserDomain';
 
 export class CreateUserUseCase
 {
@@ -17,13 +18,16 @@ export class CreateUserUseCase
             cost: 4
         });
 
-        const user = new User({
-            enable: false,
-            password: payload.password,
+        const user: UserDomain = {
+            _id: uuidv4(),
             username: payload.username,
-            role: payload.role
-        })
+            password: payload.password,
+            role: payload.role,
+            enable: false,
+            createdAt: new Date(),
+            updatedAt: new Date()
+        };
 
-        return this.repository.create(payload);
+        return this.repository.create(user);
     }
 }
