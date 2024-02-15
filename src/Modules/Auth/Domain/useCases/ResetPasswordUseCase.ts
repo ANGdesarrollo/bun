@@ -1,7 +1,5 @@
 import { UserRepository } from '../../Infraestructure/Repository/UserRepository';
 import { UserResetPasswordPayload } from '../Payloads';
-import { User } from '../Entities/User';
-
 
 export class ResetPasswordUserUseCase extends UserRepository
 {

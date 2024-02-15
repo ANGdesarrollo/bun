@@ -1,4 +1,3 @@
-import { User } from '../../Domain/Entities/User';
 import { Role } from '../../Domain/Entities/Role';
 import { UserDomain } from '../../Domain/Entities/UserDomain';
 
