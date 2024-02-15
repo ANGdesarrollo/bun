@@ -1,4 +1,3 @@
-import { User } from '../../Domain/Entities/User';
 import { UserDomain } from '../../Domain/Entities/UserDomain';
 export class ResetPasswordTransformer
 {
