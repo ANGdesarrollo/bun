@@ -7,31 +7,32 @@ import { AuthValidation } from '../../../../Shared/Presentation/Validations/Auth
 export class AuthRouter
 {
     app: Elysia;
-    routeBase: string;
     constructor(app: Elysia)
     {
         this.app = app;
-        this.routeBase = '/api/auth';
     }
 
     public start()
     {
-        this.app.post(`${this.routeBase}/register`, AuthController.create, {
-            body: RegisterBodyValidation
-        });
-        this.app.post(`${this.routeBase}/login`, AuthController.login, {
-            body: LoginBodyValidation
-        });
-        this.app.get(`${this.routeBase}/forgot-password/:username`, AuthController.forgotPassword);
-        this.app.get(`${this.routeBase}`, AuthController.list, {
-            cookie: AuthValidation
-        });
-        this.app.put(`${this.routeBase}/reset-password`, AuthController.resetPassword);
-        this.app.get(`${this.routeBase}/me`, AuthController.getMe, {
-            cookie: AuthValidation
-        });
-        this.app.get(`${this.routeBase}/refresh-token`, AuthController.refreshCookie, {
-            cookie: AuthValidation
-        });
+        this.app.group('/api/auth', (app) =>
+            app
+                .post('/register', AuthController.create, {
+                    body: RegisterBodyValidation
+                })
+                .post('/login', AuthController.login, {
+                    body: LoginBodyValidation
+                })
+                .get('/forgot-password/:username', AuthController.forgotPassword)
+                .get('', AuthController.list, {
+                    cookie: AuthValidation
+                })
+                .put('/reset-password', AuthController.resetPassword)
+                .get('/me', AuthController.getMe, {
+                    cookie: AuthValidation
+                })
+                .get('/refresh-token', AuthController.refreshCookie, {
+                    cookie: AuthValidation
+                })
+        )
     }
 }
